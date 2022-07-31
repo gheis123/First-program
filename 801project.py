@@ -127,3 +127,72 @@ for _ in range(int(input())):
 for name in sorted(s,reverse=True):
     print(name)
 
+#<________________NEW___________________>
+
+#Brute-force(완전탐색)
+
+#순열(Permutation)
+from itertools import permutations
+arr=[0,1,2,3]
+cnt=0
+for i in permutations(arr,2):
+    cnt+=1
+    print(i)
+print("총 개수는 {}입니다.".format(cnt))
+
+
+#조합(Combination)
+from itertools import combinations
+arr=[0,1,2,3]
+cnt=0 #cnt 초기화
+for i in combinations(arr,2):
+    cnt+=1
+    print(i)
+print("총 개수는 {}입니다.".format(cnt))
+
+#example(백설공주와 일곱난쟁이)
+#백설공주는 의자 7,접시7,나이프7개를 준비한다.
+#난쟁이가 쓰고 다니는 모자에 100보다 작은 양의 정수를 적었다.
+#일곱 난쟁이의 모자에 쓰여있는 숫자의 합은 100이다.
+#일곱 난쟁이를 찾는 프로그램을 개발하시오.
+
+#제한 조건: 아홉개의 줄에 1보다 크거나 같고 99보다 작거나 같은 자연수 주어짐
+#모든 숫자는 서로 다르며, 항상 답이 유일한 경우만 입력으로 주어지게 된다.
+#[7,8,10,13,15,19,20,23,25]=>[7,8,10,13,19,20,23]
+#[8,6,5,1,37,30,28,22,36]=>[8,6,5,1,30,28,22]
+from itertools import combinations
+ex1=[7,8,10,13,15,19,20,23,25]
+ex2=[8,6,5,1,37,30,28,22,36]
+
+for i in combinations(ex1,7):
+    if sum(i)==100:
+        print(list(i))
+     
+for j in combinations(ex2,7):
+    if sum(j)==100:
+        print(list(j))
+
+#example 
+#유레카이론
+#Tn=1+2+3+...+n
+#(T)={1,3,6,10,15,21,28.....}
+#4=T1+T2, 5=T1+T1+T2, 6=T3 or T2+T2
+#몇몇 자연수가 정확하게 3개의 삼각수의 합으로 표현될 수 있는지 궁금해졌음.
+
+#삼각수가 다 다를 필요는 없으며, 3개의 삼각수의 합으로 표현될 수 있는지??
+#num3: 10 20 1000 ->1 0 1  여기서 1은 표현가능, 0은 표현 불가능.
+#단 K의 범위는 3이상 1000이하이다.
+
+T=[n*(n+1)//2 for n in range(45)] #45*46/2 =1035, 44*45/2=990
+
+def is_possible(K):
+    for i in range(1,45):
+        for j in range(i,45):
+            for k in range(j,45):
+                if T[i]+T[j]+T[k]==K:
+                    return 1
+    return 0
+
+for _ in range(int(input())):
+    print(is_possible(int(input())))
+
