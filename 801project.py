@@ -66,7 +66,6 @@ for _ in range(int(input())):
 
 print("The output is {}".format(result))
 
-
 #map: key-value (key는 중복될 수 없다) 
 #삽입,삭제 O(logN)
 #unordered map의 내부 구조는 hash로 되어져 있다.
@@ -84,7 +83,7 @@ for _ in range(int(input())): #사용자에게 책의 권수를 숫자로 입력
     else:
         books[name]=1
 
-max_val=max(books.values())
+max_val=max(books.values()) #전체 value 값에서 가장 max_number return
 arr=[]
 for k,v in books.items():
     if v==max_val:
