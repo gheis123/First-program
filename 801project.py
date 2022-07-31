@@ -76,21 +76,22 @@ print("The output is {}".format(result))
 #책의 제목을 출력하는 프로그램을 작성하라
 #5 top top top top kimtop ==>top(output)
 books=dict()
-for _ in range(int(input())): #사용자에게 책의 권수를 숫자로 입력받는다.
-    name=input() #사용자에게 책의 이름을 입력받는다.
-    if name in books:
-        books[name]+=1
+num=int(input("Input your books numbers:"))
+for _ in range(num):
+    book_name=input("Input your book name:")
+    if book_name in books:
+        books[book_name]+=1
     else:
-        books[name]=1
-
-max_val=max(books.values()) #전체 value 값에서 가장 max_number return
-arr=[]
+        books[book_name]=1
+max_number=max(books.values())
+j=[]
 for k,v in books.items():
-    if v==max_val:
-        arr.append(k) #같은 count값이 중복되어질 수 있으므로 arr를 생성.
+    if max_number==v:
+        j.append(k)
+j.sort()
+print(books)
+print(j[0])
 
-arr.sort()  #alpha 숫서로 정렬하는 부분.
-print(arr[0]) #가장 first 부분 print
 
 
 #set->hash로 되어있고, 삽입, 삭제 복잡도는 O(1). 
