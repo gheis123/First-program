@@ -65,3 +65,30 @@ for _ in range(int(input())):
             result.append(0)
 
 print("The output is {}".format(result))
+
+
+#map: key-value (key는 중복될 수 없다) 
+#삽입,삭제 O(logN)
+#unordered map의 내부 구조는 hash로 되어져 있다.
+#python의 dictionary는 해시여서 정렬되어 있지 않고 O(1)이다.
+
+#example(best-seller)
+#오늘 하루 동안 팔린 책의 제목이 입력으로 들어왔을 때, 가장 많이 팔린
+#책의 제목을 출력하는 프로그램을 작성하라
+#5 top top top top kimtop ==>top(output)
+books=dict()
+for _ in range(int(input())): #사용자에게 책의 권수를 숫자로 입력받는다.
+    name=input() #사용자에게 책의 이름을 입력받는다.
+    if name in books:
+        books[name]+=1
+    else:
+        books[name]=1
+
+max_val=max(books.values())
+arr=[]
+for k,v in books.items():
+    if v==max_val:
+        arr.append(k) #같은 count값이 중복되어질 수 있으므로 arr를 생성.
+
+arr.sort()  #alpha 숫서로 정렬하는 부분.
+print(arr[0]) #가장 first 부분 print
