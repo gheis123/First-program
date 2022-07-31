@@ -40,4 +40,28 @@ while len(h):
     print(heapq.heappop(h))
 #출력해보면 작은 순서순으로 출력되는 것을 알 수 있다.
 
+#절댓값 힙
+#배열에서 정수 x(!=0)를 넣는다.
+#절대값이 가장 작은 값을 출력하고, 그 값을 배열에서 제거한다.
+#절대값이 가장 작은 값이 여러개이면, 가장 작은 수를 출력하고
+#그 값을 배열에서 제거한다.
+#프로그램은 처음에 비어있는 배열에서 시작한다.
+#example input:18 1 -1 0 0 0 1 1 -1 -1 2 -2 0 0 0 0 0 0 0
+#example output:-1 1 0 -1 -1 1 1 -2 2 0
 
+import heapq
+import sys,heapq
+input=sys.stdin.readline
+hq=[]
+result=[]
+for _ in range(int(input())):
+    x=int(input())
+    if x==0:
+        if len(hq):
+            result.append(heapq.heappop(hq)[1])
+        else:
+            result.append(0)
+    else:
+        heapq.heappush(hq,(abs(x),x))
+
+print("The output is {}".format(result))
