@@ -56,12 +56,12 @@ hq=[]
 result=[]
 for _ in range(int(input())):
     x=int(input())
+    if x!=0:
+        heapq.heappush(hq,(abs(x),x))
     if x==0:
         if len(hq):
             result.append(heapq.heappop(hq)[1])
         else:
             result.append(0)
-    else:
-        heapq.heappush(hq,(abs(x),x))
 
 print("The output is {}".format(result))
