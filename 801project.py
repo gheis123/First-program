@@ -91,3 +91,38 @@ for k,v in books.items():
 
 arr.sort()  #alpha 숫서로 정렬하는 부분.
 print(arr[0]) #가장 first 부분 print
+
+
+#set->hash로 되어있고, 삽입, 삭제 복잡도는 O(1). 
+#example program: 4
+#A in 
+#B in 
+#A out
+#C in
+#==>output: B,C
+
+people=dict()
+num=int(input("Input your number:"))
+print("{}번의 기록이 존재합니다.".format(num))
+for _ in range(num):
+    (a,b)=map(str,input().split())
+    people[a]=b
+for k,v in people.items():
+    if v=='in':
+        print(k)
+
+#이 문제를 똑같이 set의 관점에서 살펴보자.
+import sys
+input=sys.stdin.readline
+s=set()
+for _ in range(int(input())):
+    name,el=input().split()
+    if el=='in':
+        s.add(name)
+    elif el=='out':
+        if name in s:
+            s.remove(name)
+
+for name in sorted(s,reverse=True):
+    print(name)
+
