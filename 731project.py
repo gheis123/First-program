@@ -64,6 +64,8 @@ or git add (file_name.py)
 #삽입과 삭제가 array에 비해 O(1)의 복잡도를 갖는다.
 #하지만, random access가 불가능한다는 단점을 가지고 있다.
 
+#stack은 주로 DFS에서 사용한다.
+
 #요세푸스 문제
 #원을 따라 앉아있고 (7,3)으로 입력하게 되면 3칸씩 띄어서 사람을 출력하고
 #출력 대상에서 제외한다
@@ -85,7 +87,7 @@ or git add (file_name.py)
 #Valid PS VPS problem
 #VPS라면 YES, 아니라면 "NO"를 출력하도록
 def VPS_test(string):
-    stack=[]
+    stack=[] 
     judgement="YES"
     for strr in string:
         if strr=="(":
