@@ -128,6 +128,26 @@ for end,start in meetings:
         t=end
 print(ans)
 
+
+#__________________________________________#
+
+time_list=[[1,4],[3,5],[0,6],[5,7],[3,8],[5,9],[6,10],[8,11],[8,12],[2,13],[12,14]]
+for i in range(len(time_list)):
+    time_list[i][0],time_list[i][1]=time_list[i][1],time_list[i][0] #start지점과 ending지점을 바꾼다.
+
+time_list.sort() #끝나는 순서로 sorting.
+
+#순서는 [end,start]
+cnt=1
+start,end=time_list[0][1],time_list[0][0]
+print(start,end)
+for idx in range(len(time_list)-1):
+    if end<=time_list[idx+1][1]: #starting point에 대한 정보를 update
+       cnt+=1
+       end=time_list[idx+1][0] #ending에 대한 정보를 update
+print(cnt)
+
+
 #수리공항승
 #N,L==>N은 물이 새는 곳이 몇개인지, L은 테이프의 길이이다.
 #수리공은 생각한다 0.5간격에는 적어도 간격을 줘야 물이 새지 않는다!
