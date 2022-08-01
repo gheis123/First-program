@@ -295,3 +295,51 @@ for i in range(1,N+1): #N=6이라면 총 6번 repeat!
 #chk[2]이 False라면, ans를 1 증가시키고 dfs(2)함수 호출.
 print(ans)
 
+
+
+#__________________________________________________________________________________#
+#미로탐색 예제
+#N*M 크기로 표현되는 미로가 있다.
+#미로에서 1은 이동할 수 있는 칸이고, 0은 이동 불가능한 칸이다.
+#시작지점과 도착지점 역시 counting 해준다. 
+
+#첫째줄에 두정수 N,M (2<=N, M<=100)이 주어진다.
+#(1,1)->(N,M)까지 지나야 하는 최소의 칸수를 return 하도록 programming하라.
+
+#최단거리를 구하는 문제이므로 BFS를 사용하는 것이 좋다.
+from collections import deque
+
+#tuple 형식으로 상하좌우 생성하기.
+dx=(1,0,-1,0)
+dy=(0,1,0,-1) 
+
+N,M=map(int,input("N,M의 값을 차례로 space 포함하여 숫자로 입력하시오:").split())
+board=[input() for _ in range(N)] #list안의 list로 구성되어져 있는 이중 list구조
+chk=[[False]*M for _ in range(N)] #list안의 list 
+#만일 4,6으로 입력했으면 [F,F,F,F,F,F]가 총 4개 있다는 뜻.
+dq=deque()
+dq.append((0,0,1))
+chk[0][0]=True
+print("board matrix is that {}".format(board))
+print("chk matrix is that {}".format(chk))
+#내가 설정한 범위 내에 들어있는가????
+def is_valid_coord(y,x): 
+    return 0<=y<N and 0<=x<M
+
+while len(dq)>0:
+    print(dq)
+    y,x,d=dq.popleft()
+    print(dq)
+    if y==N-1 and x==M-1: #last case.
+        print(d)
+        break
+
+    for k in range(4):
+        ny=y+dy[k]
+        nx=x+dx[k]
+        nd=d+1
+        if is_valid_coord(ny,nx) and board[ny][nx]=='1' and not chk[ny][nx]:
+            chk[ny][nx]=True
+            dq.append((ny,nx,nd))
+
+print("last chk matrix is that {}".format(chk))
