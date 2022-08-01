@@ -24,25 +24,28 @@ ans=1 #minimum은 1일 수 밖에 없다.
 
 def search():
     global ans
-    for i in range(N): #first case
-        cnt=1 #다시 행이 다른 숫자로 변하기 시작하면 1로 초기화시키기.
-        for j in range(1,N): #i=0이라면, b[0][0]~b[0][N-1]까지 탐구함.
-            #이것을 열의 변화라고 해석할 수 있다.
-            if board[i][j-1]==board[i][j]:
-                cnt+=1 #하나가 같을 때마다 counting++
-                ans=max(ans,cnt) #주기적 update
-            else:
-                cnt=1 #아무것도 같은 것이 없다면 1!
-
-    for j in range(N): #second case
-        cnt=1
-        for i in range(1,N): #j=0이라면 b[0][0]~b[N-1][0] =>행의 변화.
-            if board[i-1][j]==board[i][j]:
+    #1) Row point와 Col point를 나눠준다.
+    #[0][0]~[0][N-1]에서부터 [N-1][0]~[N-1][N-1]
+    #[0][0]~[N-1][0]에서부터 [0][N-1]~[N-1][N-1]
+    
+    for i in range(0,N):
+        cnt=1 #초기화 과정 무조건 필요함.
+        for j in range(0,N-1):
+            if board[i][j]==board[i][j+1]:
                 cnt+=1
-                ans=max(ans,cnt)
+                ans=max(cnt,ans)
             else:
                 cnt=1
-
+    
+    for j in range(0,N):
+        cnt=1 #초기화 과정 꼭 필요하다.
+        for i in range(0,N-1):
+            if board[i][j]==board[i+1][j]:
+                cnt+=1
+                ans=max(cnt,ans)
+            else:
+                cnt=1
+   
 
 for i in range(N):
     for j in range(N):
