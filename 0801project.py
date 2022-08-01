@@ -145,3 +145,153 @@ while x<=1000:
     else:
         x+=1
 print(ans)
+
+
+
+#___________________________________________________________________________________#
+#완전탐색에서의 DFS[stack],BFS[Queue],백트래킹.
+#graph,tree: 필수적인 개념
+#역(Node,Vertex), 역을 잇는 노선은 (Edge)
+#그래프의 방향성: 방향있음, 무방향그래프(방향이 없거나 양방향 그래프이다)
+#방향성이 없다는건, 어느 쪽이든 오갈 수 있다는 뜻이므로, 양방향이나 일반 직선과는 같은 개념
+#(수학적인 지식으로 보자면 직선과 선분의 개념으로 이해하는 것이 좋다)
+
+#graph: 순환 그래프와 비순환 그래프로 나뉜다.
+#Cyclic Graph, ACyclic Graph
+#단 하나라도, 순환하는 부분이 있다면 Cyclic Graph이다.
+
+#git: 방향성 비순환 그래프->Version Control System: 
+#시간이 지나며 기록이 쌓이며, 시간은 한 방향으로만 흐른다.
+#사이클이 절대 발생하지 않는 구조
+
+#만일 노드(역)이 5개인데, 간선이 0개인 그래프가 있다면 연결요소가 5개인 그래프이다.
+#기억하자! 완전히 분리된 요소들이 여럿 주어지는 그래프도 있다(사실은 하나의 그래프이다)
+
+#Tree: 순환성이 없는 무방향 그래프
+#트리의 가장 바깥쪽 노드를 leaf node라고 한다(간선이 하나만 연결된 노드)
+#서로 다른 노드의 경로는 무조건 하나로 유일해야 한다.
+#num[node]=num[Edge]+1
+#트리는 루트노드가 하나이며, 부모-자식 관계가 존재한다
+#상위 노드가 부모, 하위노드가 자식에 해당한다.
+
+#2차원 Matrix
+#Adjacency Matrix (방향 그래프의 인접행렬)
+#특징은, 방향성이 있다는 것 Aij!=Aji일수 있다는 것
+
+#무방향 그래프는 Aii==0
+#Aij=Aji 관계가 항상 성립한다. 마치 직선처럼 고려할 수 있으므로
+
+#인접 리스트를 구하는 방식도 꼭 알아두자.
+
+#노드가 N개 일 때, 인접 행렬은 N^2의 공간을 할당한다.
+#인접 리스트는 인접행렬보다 메모리를 덜 차지하는 장점이 있다.
+#보통 인접 행렬로 구현할때가 많은 편에 속한다.
+
+#DFS[Depth First Search] ->깊이 우선 탐색
+#정답이 되는 노드를 찾을때까지 탐색을 지속적으로 진행한다.
+
+#BFS[Breadth First Search]->너비 우선 탐색->큐로 구현한다.
+#시작노드에서 목표 노드까지 최단거리를 구할 때 주로 사용하게 된다.
+#제일 짧은 거리부터 하나씩 늘려가며 도달 가능 모든 노드를 탐색
+#최초로 목표 도달했을 때 최단거리임이 보장된다.
+#일반적으로 DFS보다는 BFS를 많이 사용한다.
+
+
+#정점의 개수 V, 간선의 개수 E
+#시간복잡도 
+#1.인접행렬:   O(V^2)
+#2.인접리스트: O(V+E)
+#정점의 개수가 많을수록 O(V) 
+#간선의 개수가 많을수록 O(V+E)
+
+#from collections import deque
+
+#dy=(0,1,0,-1)
+#dx=(-1,0,1,0)
+#N=int(input())
+#chk=[[False]*N for _ in range(N)]
+
+#def is_valid_coord(y,x): #내가 입력한 숫자만큼의 범위안에 속하는지?????
+#    return 0<=y<N and 0<=x<N
+
+#def dfs(y,x):
+#    if adj[y][x]==ans:
+#        return 
+
+#    for k in range(4):
+#        #(y,x)=(1,1) 가정하자.
+#        #k==0 (ny,nx)=(1,0)
+#        #k==1 (ny,nx)=(2,1)
+#        #k==2 (ny,nx)=(1,2)
+#        #k==3 (ny,nx)=(0,1)
+#        #AH~ 한 point를 기점으로 상하좌우 1만큼을 더 탐구하는 것임! 
+#        ny=y+dy[k] #dy=(0,1,0,-1) 
+#        nx=x+dx[k] #dx=(-1,0,1,0)
+#        if is_valid_coord(ny,nx) and not chk[ny][nx]:
+#            chk[ny][nx]=True
+#            dfs(ny,nx) #재귀함수의 호출.
+
+#def bfs(sy,sx): #start y,x
+#    q=deque() #queue created!
+#    chk[sy][sx]=True
+#    q.append((sy,sx))
+#    while len(q):
+#        y,x=q.popleft()
+#        if adj[y][x]==ans:
+#            return
+#        for k in range(4):
+#            ny=y+dy[k]
+#            nx=x+dx[k]
+#            if is_valid_coord(ny,nx) and not chk[ny][nx]:
+#                chk[ny][nx]=True
+#                q.append(ny,nx)
+
+
+#example (연결요소의 개수)
+#방향 없는 그래프가 주어졌을때, 연결요소의 개수 구하는 program
+#첫줄에 정점개수와 간선개수가 주어진다(N,M)
+#1<=N<=1000, 0<=M<=N*(N-1)/2
+#둘쨰줄에 간선의 양끝점 u와 v가 주어진다.
+
+import sys
+
+sys.setrecursionlimit(10**6) #1000번의 재귀 제한을 푸는 code
+input=sys.stdin.readline
+print("N값과 M값을 한번에 space 고려하여 숙자로 입력하세요:")
+N,M=map(int,input().split())
+
+adj=[[False]*(N+1) for _ in range(N+1)] #N+1 * N+1 Matrix 생성!
+print("초기의 상태 Matrix는 아래와 같다.")
+print(adj)
+
+for _ in range(M):
+    print("간선의 연결상태를 알려주세요.{}번!".format(M))
+    a,b=map(int,input().split())
+    adj[a][b]=True
+    adj[b][a]=True
+print("간선을 연결한 후 Matrix의 상태는 아래와 같다.")
+print(adj)
+
+ans=0
+chk=[False]*(N+1) #노드 번호가 1부터 시작하기 때문에 모든 공간을 N+1로 저장한다.
+
+def dfs(i):
+    for j in range(1,N+1):
+        if adj[i][j] and not chk[j]:
+            chk[j]=True
+            dfs(j) #재귀함수 호출.
+
+for i in range(1,N+1): #N=6이라면 총 6번 repeat!
+    if not chk[i]:
+        ans+=1
+        chk[i]=True
+        dfs(i)
+#chk[1]가 False라면, ans를 1 증가시키고 dfs(1)함수 호출
+#dfs실행이되면, 총 6번 반복한다 
+#adj[1][1]이 True이고 chk[1]이 False라면 chk[1]을 True로 고친다.
+#......#
+#adj[1][6]이 True이고 chk[6]이 False라면 chk[6]을 True로 고친다.
+
+#chk[2]이 False라면, ans를 1 증가시키고 dfs(2)함수 호출.
+print(ans)
+
