@@ -395,3 +395,131 @@ while dq:
 
 print(ans)
 
+#____________________________________________________________________#
+##선형탐색(Sequential search): 반복문을 돌려 하나하나 비교하면서 찾아나감
+##example
+#from random import *
+#num_list=[]
+#for _ in range(5):
+#    num_list.append(randint(1,50))
+
+#stored_num=num_list[0]
+#shuffle(num_list)
+
+#for index in range(len(num_list)):
+#    if num_list[index]==stored_num:
+#        print("현재의 list 상태:{}".format(num_list))
+#        print("{}은(는) {}번에 존재하고 있습니다".format(stored_num,index))
+#        break
+
+
+##이분탐색: 구현이 복잡하지만 더 빠른 알고리즘. (탐색할 부분이 하나 남을 때까지)
+##Complexity: O(logN) 밑은 2만큼의 fast Algorithm
+
+#a=[2,1,3,6,6,8,12]
+#a.sort() #반드시 순서대로 정렬해줘야 한다.
+#left=0
+#right=len(a)-1 #총 7개의 데이터->right=6으로 setting.
+#mid=(left+right)//2
+#while left<=right:
+#    if a[mid]==3:
+#        print("{}번째 index에 위치하고 있습니다.".format(mid))
+#        break
+#    elif a[mid]>3:
+#        right=mid-1 #왼쪽에서 탐구하자!
+#    else:
+#        left=mid+1 #오른쪽에서 탐구하자!
+#    mid=(left+right)//2
+
+##훨씬 쉽게 이를 구현하는 방법을 살펴보자.
+#from bisect import bisect_left,bisect_right
+#a=[2,3,6,6,6,10,12,15] 
+#l=bisect_left(a,6)
+#r=bisect_right(a,6)
+#print(r-l) #6이 몇번 counting되는지 살펴보는 코드.
+
+##Parametric Search(매개변수탐색)
+##1.최적화문제: 문제상황 만족하는 변수 최소,최대를 구하는 문제
+##2.결정문제: YES,NO로 답할 수 있는 문제
+
+##나무자르기 문제
+##상근이는 나무 M미터가 필요하다.
+##높이 setting(양의 정수 or 0) 톱날이 땅으로부터 H만큼 위로 올라간다.
+##(20,15,10,17)->15미터로 지정했다면->(15,15,10,15)
+##나무를 필요한 만큼만 집으로 가져가려한다.
+##적어도 M미터의 나무를 집에 가져가기 위해 절단기에 설정할 수 있는
+##높이의 최대값을 return 하는 프로그램을 작성하시오.
+
+##나무의 수: N (1<=N<=1,000,000)
+##집으로 가져갈 나무의 길이: M(1<=M<=2,000,000,000)
+##나무의 길이가 주어짐.
+
+##example1
+##나무의수 4, 집으로 가져갈 나무의 길이 7
+##20 15 10 17=>15
+
+##example2
+##나무의수 5, 집으로 가져갈 나무의 길이:20
+##4 42 40 26 46=>36
+
+#print("나무의수N과 집으로가져갈 나무의 길이M을 입력하시오:")
+#N,M=map(int,input().split())
+#print("나무의 상황입력하시오:{}개 parameter needed!".format(N))
+#tree=list(map(int,input().split()))
+#lo=0
+#hi=max(tree) #list내의 모든 원소의 sum.
+#mid=(lo+hi)//2 #몫의 개념을 사용해줘야 한다.
+
+#def get_total_tree(h): #모든 나무에 대해 자른 후의 값들의 sum.
+#    ret=0
+#    for t in tree:
+#        if t>h:
+#            ret+=t-h
+#    return ret
+
+#ans=0
+#while lo<=hi:
+#    if get_total_tree(mid)>=M:
+#        ans=mid
+#        lo=mid+1
+#    else:
+#        hi=mid-1
+#    mid=(lo+hi)//2
+
+#print(ans)
+
+
+#숫자 카드게임
+#숫자카드는 정수 하나가 적혀있다.
+#상근이는 N개의 카드를 가지고 있다.
+#10
+#6 3 2 10 10 10 -10 -10 7 3
+#8
+#10 9 -5 2 3 4 5 -10
+num=int(input("Input your number:"))
+num_list=list(map(int,input().split()))
+second_num=int(input("Input your second number:"))
+result=list(map(int,input().split()))
+print(num_list,result)
+cnt=0
+
+for index in result:
+    if index not in num_list:        
+        result[cnt]=0
+        cnt+=1
+    else:
+        result[cnt]=num_list.count(index)
+        cnt+=1
+print(result)
+
+
+#다른 방식으로 구현하기
+from bisect import bisect_left,bisect_right
+
+N=int(input())
+cards=sorted(map(int,input().split()))
+M=int(input())
+ans=[]
+for i in map(int,input().split()):
+    ans.append(bisect_right(cards,i)-bisect_left(cards,i))
+print(' '.join(map(str,ans)))
