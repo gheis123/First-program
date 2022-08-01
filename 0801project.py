@@ -154,20 +154,24 @@ print(cnt)
 #첫줄은 N,L을 입력받고
 #둘째줄은 물이 새는 위치를 split()으로 입력받는다.
 
-coord=[False]*1001
-N,L=map(int,input().split())
-for i in map(int,input().split()):
-    coord[i]=True
+coord=[0]*1001
+print("물 새는 곳의 개수와 테이프의 길이를 순서대로 입력하시오")
 
-ans=0
+N,L=map(int,input().split()) #N:물 새는 곳의 개수, L:tape length
+print("정확히 어디에 물이 새는지 알려줘! 개수는 {}개".format(N))
+
+for i in map(int,input().split()): #정확하게 물이 새는 곳만 1로 변경시켜줌.
+    coord[i]=1
+
+cnt=0
 x=0
 while x<=1000:
-    if coord[x]:
-        ans+=1
+    if coord[x]==1:
+        cnt+=1
         x+=L #왼쪽부터 x좌표를 추가해나감. 그 이후로 탐색.
     else:
         x+=1
-print(ans)
+print(cnt)
 
 
 
