@@ -343,3 +343,55 @@ while len(dq)>0:
             dq.append((ny,nx,nd))
 
 print("last chk matrix is that {}".format(chk))
+
+
+
+#_____________________________________________#
+#back-Tracking
+#진행과정에서 답이 아닌 분기를 만나면 탐색을 진행하지 않고, 다른 분기로 가서 가지치기함.
+
+#Alphabet example
+#세로 R칸, 가로 C칸으로 된 표 모양 보드가 있다.
+#보드의 각 칸에는 대문자 알파벳이 하나씩 적혀있다.
+#(1,1)에 말이 놓여있는데, 이미 같은 알파벳을 지나왔다면 그 칸은 지나갈 수 없다.
+#말이 최대한 몇칸을 갈 수 있을지 탐구해보라.
+
+#1<=R, C<=20
+#말이 지나갈 수 있는 최대의 칸을 출력한다면???
+
+from collections import deque
+
+dy=(0,1,0,-1)
+dx=(1,0,-1,0)
+
+R,C=map(int,input("Input your R,C:").split()) 
+#Goal: R*C matrix create!
+board=[input() for _ in range(R)]
+chk=[[set() for _ in range(C)] for _ in range(R)]
+ans=0
+
+def is_vaild_coord(y,x):
+    return 0<=y<R and 0<=x<C
+
+dq=deque()
+chk[0][0].add(board[0][0])
+dq.append((0,0,board[0][0]))
+while dq:
+    print("dq: {}".format(dq))
+    print("chk: {}".format(chk))
+    print("board: {}".format(board))
+    print("\n\n\n")
+    y,x,s=dq.popleft()
+    ans=max(ans,len(s))
+
+    for k in range(4):
+        ny=y+dy[k]
+        nx=x+dx[k]
+        if is_vaild_coord(ny,nx) and board[ny][nx] not in s:
+            ns=s+board[ny][nx]
+            if ns not in chk[ny][nx]:
+                chk[ny][nx].add(ns)
+                dq.append((ny,nx,ns))
+
+print(ans)
+
