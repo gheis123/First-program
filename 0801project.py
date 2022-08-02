@@ -12,56 +12,54 @@
 #              PPCC         YCYZC
 #                           CPPZZ
 
-N=int(input("Input your N:"))
-board=[]
-for _ in range(N):
-    split_list=list(input())
-    board.append(split_list)
+#사탕 먹기 게임
+#첫째줄에 보드의 크기N (3~50)이 주어진다.
+#다음 N개 줄에는 보드에 채워져 있는 사탕의 색상이 주어진다.
+#빨:C, 파:P, 초:Z, 노:Y
+#사탕의 위치를 서로 교환가능=>먹을 수 있는 행 또는 열에서의 색깔 같은 사탕 maximum?????
 
-print(board) #PPC PCP CPC 입력하면 
-#board=[['P','P','C'],['P','C','P'],['C','P','C']] =>이런 형식으로 저장된다.
-ans=1 #minimum은 1일 수 밖에 없다.
+#ex)
+#3[3]          4[4]        5[4 by c] 
+#CCP           PPPP         YCPZY
+#CCP           CYZY         CYZZP 
+#PPC           CCPY         CCPPP
+#              PPCC         YCYZC
+#                           CPPZZ
 
-def search():
-    global ans
-    #1) Row point와 Col point를 나눠준다.
-    #[0][0]~[0][N-1]에서부터 [N-1][0]~[N-1][N-1]
-    #[0][0]~[N-1][0]에서부터 [0][N-1]~[N-1][N-1]
-    
-    for i in range(0,N):
-        cnt=1 #초기화 과정 무조건 필요함.
-        for j in range(0,N-1):
-            if board[i][j]==board[i][j+1]:
+N=int(input())
+b=[list(input()) for _ in range(N)]
+ans=1
+
+def search(): #user 입력에 따라서 N*N 정사각행렬이 만들어진다.
+    global ans 
+    #[0][0]~[0][N-1] ->열의 변화(행->열)
+    #[0][0]~[N-1][0] ->행의 변화(열->행)
+    for i in range(N):
+        cnt=1 #한번씩 변경될 때마다 cnt의 값을 바꿔준다.
+        for j in range(N-1):
+            if b[i][j]==b[i][j+1]:
                 cnt+=1
                 ans=max(cnt,ans)
-            else:
-                cnt=1
-    
-    for j in range(0,N):
-        cnt=1 #초기화 과정 꼭 필요하다.
-        for i in range(0,N-1):
-            if board[i][j]==board[i+1][j]:
+    for j in range(N):
+        cnt=1 #한번씩 변경될 때마다 cnt의 값을 바꿔준다.
+        for i in range(N-1):
+            if b[i][j]==b[i+1][j]:
                 cnt+=1
                 ans=max(cnt,ans)
-            else:
-                cnt=1
-   
 
+#행렬을 바꿕면서 탐색한다.
 for i in range(N):
     for j in range(N):
-        if j+1<N: #i=0이라면 b[0][j],b[0][j+1]=b[0][j+1],b[0][j]
-            #즉, 열과의 관계가 변하는 것 
-            #but, j+1이 N이 되어서는 안된다. 따라서 j+1<N[열의 변화이다]
-            board[i][j],board[i][j+1]=board[i][j+1],board[i][j]
+        if j+1<N:
+            b[i][j],b[i][j+1]=b[i][j+1],b[i][j]
             search()
-            board[i][j],board[i][j+1]=board[i][j+1],board[i][j] #원상복구
-
-        if i+1<N: #이것은 행의 변화를 뜻하는 것이다.
-            board[i][j],board[i+1][j]=board[i+1][j],board[i][j]
+            b[i][j],b[i][j+1]=b[i][j+1],b[i][j] #다시 원상복귀
+        if i+1<N:
+            b[i][j],b[i+1][j]=b[i+1][j],b[i][j]
             search()
-            board[i][j],board[i+1][j]=board[i+1][j],board[i][j] #원상복구
-
+            b[i][j],b[i+1][j]=b[i+1][j],b[i][j]
 print(ans)
+
 
 
 
