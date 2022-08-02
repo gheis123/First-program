@@ -183,16 +183,14 @@ for j in combinations(ex2,7):
 #num3: 10 20 1000 ->1 0 1  여기서 1은 표현가능, 0은 표현 불가능.
 #단 K의 범위는 3이상 1000이하이다.
 
-T=[n*(n+1)//2 for n in range(45)] #45*46/2 =1035, 44*45/2=990
+T=[n*(n+1)//2 for n in range(1,46)] #45개의 삼각수 만들기.
 
-def is_possible(K):
-    for i in range(1,45):
+def judgement(num):
+    for i in range(0,45):
         for j in range(i,45):
             for k in range(j,45):
-                if T[i]+T[j]+T[k]==K:
+                if T[i]+T[j]+T[k]==num:
                     return 1
     return 0
 
-for _ in range(int(input())):
-    print(is_possible(int(input())))
-
+print(judgement(10),judgement(20),judgement(1000))
