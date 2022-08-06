@@ -182,13 +182,13 @@ for j in combinations(ex2,7):
 #삼각수가 다 다를 필요는 없으며, 3개의 삼각수의 합으로 표현될 수 있는지??
 #num3: 10 20 1000 ->1 0 1  여기서 1은 표현가능, 0은 표현 불가능.
 #단 K의 범위는 3이상 1000이하이다.
-
-T=[n*(n+1)//2 for n in range(1,46)] #45개의 삼각수 만들기.
+N=46
+T=[n*(n+1)//2 for n in range(1,N)] #45개의 삼각수 만들기.
 
 def judgement(num):
-    for i in range(0,45):
-        for j in range(i,45):
-            for k in range(j,45):
+    for i in range(0,N-1):
+        for j in range(i,N-1):
+            for k in range(j,N-1):
                 if T[i]+T[j]+T[k]==num:
                     return 1
     return 0
