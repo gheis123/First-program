@@ -249,40 +249,44 @@ for i in combinations(list2,7):
 #            PPCC ->4    YCYZC
 #                        CPPZZ ->4
 
-N=int(input())
-x=[list(input()) for _ in range(N)] #각 N값에 대해 N개의 list 생성하기.
-ans=1 #항상 최소는 1이므로
+import sys
+input=sys.stdin.readline
+n=int(input())
+x=[]
+for _ in range(n):
+    x.append(list(input()))
 
+ans=1
 def search():
     global ans
-    for i in range(N):
+    for i in range(n):
         cnt=1
-        for j in range(0,N-1):
+        for j in range(n-1):
             if x[i][j]==x[i][j+1]:
                 cnt+=1
-                ans=max(ans,cnt)
+                ans=max(cnt,ans)
             else:
                 cnt=1
-    
-    for j in range(N):
+    for j in range(n):
         cnt=1
-        for i in range(0,N-1):
+        for i in range(n-1):
             if x[i][j]==x[i+1][j]:
                 cnt+=1
-                ans=max(ans,cnt)
+                ans=max(cnt,ans)
             else:
                 cnt=1
 
-for i in range(N):
-    for j in range(0,N-1):
+for i in range(n):
+    for j in range(n-1):
         x[i][j],x[i][j+1]=x[i][j+1],x[i][j]
         search()
         x[i][j],x[i][j+1]=x[i][j+1],x[i][j]
+        
 
-for j in range(N):
-    for i in range(0,N-1):
+for j in range(n):
+    for i in range(n-1):
         x[i][j],x[i+1][j]=x[i+1][j],x[i][j]
         search()
         x[i][j],x[i+1][j]=x[i+1][j],x[i][j]
-
+       
 print(ans)
