@@ -237,3 +237,30 @@ for i in list1:
         if j=='_':
             result+=1
 print(result)
+
+
+#open cheating room
+def solution(record):
+    answer=[] #최종으로 출력되는 메시지.
+    user={}
+    for log in record:
+        logSplit=log.split(' ')
+        if logSplit[0]=="Enter":
+            user[logSplit[1]]=logSplit[2]
+            answer.append([logSplit[1],'님이 들어왔습니다.'])
+
+        elif logSplit[0]=="Leave":
+            answer.append([logSplit[1],'님이 나갔습니다.'])
+
+        elif logSplit[0]=="Change":
+            user[logSplit[1]]=logSplit[2]
+       
+    answer=[useri[0]+i[1] for in answer]
+    return answer
+
+testcase=['Enter uid1234 Muzi',
+          'Enter uid4567 Prodo',
+          'Leave uid1234',
+          'Enter uid1234 Prodo',
+          'Change uid4567 Ryan']
+print(solution(testcase))
