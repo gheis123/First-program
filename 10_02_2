@@ -1,0 +1,69 @@
+from collections import deque
+
+dq=deque()
+dq.append((0,0,1))
+N,M=map(int,input().split())
+board=[]
+dx=(1,0,-1,0)
+dy=(0,1,0,-1)
+for _ in range(N):
+    board.append(input())
+chk=[[False]*(M) for _ in range(N)]
+
+def is_vaild(y,x):
+    return 0<=y<N and 0<=x<M
+
+chk[0][0]=True
+
+while len(dq)>0:
+    y,x,d=dq.popleft()
+    if y==N-1 and x==M-1:
+        print(d)
+        break
+    for i in range(4):
+        ny=y+dy[i]
+        nx=x+dx[i]
+        nd=d+1
+        if is_vaild(ny,nx) and board[ny][nx]=='1' and not chk[ny][nx]:
+            chk[ny][nx]=True
+            dq.append((ny,nx,nd))
+             
+         
+#Back_Tracking
+#세로 R칸, 가로 C칸.
+from collections import deque
+dq=deque()
+
+dx=(1,0,-1,0)
+dy=(0,1,0,-1)
+
+R,C=map(int,input().split())
+board=[input() for _ in range(R)]
+chk=[[set() for _ in range(C)] for _ in range(R)]
+ans=0
+
+def is_vaild_coord(y,x):
+    return 0<=y<R and 0<=x<C
+
+chk[0][0].add(board[0][0])
+dq.append((0,0,board[0][0]))
+
+while dq:
+    y,x,s=dq.popleft()
+    print(y,x,s)
+    ans=max(ans,len(s))
+
+    for k in range(4):
+        ny=y+dy[k]
+        nx=x+dx[k]
+        if is_vaild_coord(ny,nx) and board[ny][nx] not in s:
+            ns=s+board[ny][nx]
+            if ns not in chk[ny][nx]:
+                chk[ny][nx].add(ns)
+                dq.append((ny,nx,ns))
+print(ans)
+
+
+
+
+ 
