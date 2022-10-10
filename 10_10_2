@@ -1,0 +1,168 @@
+#캐시크기, 도시이름 배열(최대도시수 100,000)
+#cachesize는 정수이며 0~30
+
+#LRU: Least Recently Used
+#cache hit:1, cache miss:5
+
+from collections import deque
+
+def solution(cacheSize,cities):
+    new_list=['']*cacheSize
+    cache=deque(new_list,maxlen=cacheSize)
+    time=0
+
+    for city in cities:
+        city=city.lower()
+        if city in cache:
+            cache.remove(city)
+            cache.append(city)
+            time+=1 #cache hit
+        else:
+            cache.append(city)
+            time+=5 #cache miss
+    return time
+
+testcase=[
+    [3, ["J","P","S","N","LA","J","P","S","N","LA"]],
+    [3, ["J","P","S","J","P","S","J","P","S"]]
+]
+
+
+for case in testcase:
+    print(solution(case[0],case[1]))
+
+
+
+
+
+
+def solution(n,t,m,timetable):
+    timetable=sorted([int(i[:2])*60+int(i[3:]) for i in timetable])
+    corn=540
+    bus=540
+    #n: 반복운행수, t: 운행간격, m: 최대로 태울수있는 사람
+    for i in range(n):
+        for j in range(m): 
+            if timetable and timetable[0]<=bus:
+                corn=timetable.pop(0)-1
+            else:
+                corn=bus
+        bus+=t
+    return f'{str(corn//60).zfill(2)}:{str(corn%60).zfill(2)}'
+
+testcase=[
+    (1,1,5,['08:00','08:01','08:02','08:03']),
+    (2,10,2,['09:10','09:09','08:00']),
+    (1,2,1,['09:00','09:00','09:00','09:00'])
+]
+
+for n,t,m,timetable in testcase:
+    print(solution(n,t,m,timetable))
+
+
+
+
+def solution(str1, str2):
+    answer = 0
+    str1 = str1.lower()
+    str2 = str2.lower()
+
+    str1_list = []
+    str2_list = []
+
+    for i in range(len(str1) - 1):
+        if str1[i].isalpha() and str1[i+1].isalpha():
+            str1_list.append(str1[i:i + 2])
+
+    for i in range(len(str2) - 1):
+        if str2[i].isalpha() and str2[i + 1].isalpha():
+            str2_list.append(str2[i:i + 2])
+
+    intersection_list = set(str1_list) & set(str2_list) #교집합
+    union_list = set(str1_list) | set(str2_list) #합집합
+
+    if len(union_list) == 0:
+        return 65536
+
+    intersection_len = sum([min(str1_list.count(intersection), str2_list.count(intersection)) for intersection in intersection_list])
+    
+    union_len = sum([max(str1_list.count(union), str2_list.count(union)) for union in union_list])
+   
+    answer = int((intersection_len / union_len) * 65536)
+
+    return answer
+
+print(solution('FRANCE','french'))
+print(solution('handshake','shake hands'))
+print(solution('aa1+aa2','AAAA12'))
+print(solution('E=M*C^2','e=m*c^2'))
+
+
+import numpy as np
+
+row = 4
+col = 5
+
+s = [list(i) for i in ['CCBDE', 'AAADE', 'AAABF', 'CCBBF']]
+s = np.array(s)
+
+char = ['R', 'M', 'A', 'F', 'N', 'T', 'J', 'C', 'B']
+
+#라이언(R), 무지(M), 어피치(A), 프로도(F), 네오(N), 튜브(T), 제이지(J), 콘(C)
+
+
+while True:
+    
+    eraser = []
+
+    for i in range(row-1):
+        for j in range(col-1):
+            for k in char:
+                if np.all(s[i:i+2, j:j+2] == k) == True:
+                    eraser.append([i, j])
+    if not eraser:
+        break
+        
+    for i, j in eraser:
+        s[i:i+2, j:j+2] = '_'
+        
+
+    for _ in range(2):
+        for j in range(col):
+            for i in range(1, row):
+                if s[i, j] == '_':
+                    s[i, j], s[i-1, j] = s[i-1, j], '_'
+          
+    print(s)
+    
+print((s == '_').sum())
+
+
+def solution(record):
+    answer = []
+    user = {}
+    
+    for log in record:
+        logSplit = log.split(' ')
+        if logSplit[0] == 'Enter':
+            user[logSplit[1]] = logSplit[2]
+            answer.append([logSplit[1], '님이 들어왔습니다.'])
+        elif logSplit[0] == 'Leave':
+            answer.append([logSplit[1], '님이 나갔습니다.'])
+        elif logSplit[0] == 'Change':
+            user[logSplit[1]] = logSplit[2]
+    
+    answer = [user[i[0]] + i[1] for i in answer]
+        
+    
+    return answer
+
+
+testcase = ['Enter uid1234 Muzi', 
+            'Enter uid4567 Prodo',
+            'Leave uid1234',
+            'Enter uid1234 Prodo',
+            'Change uid4567 Ryan']
+
+print(solution(testcase))
+
