@@ -61,7 +61,6 @@ for n,t,m,timetable in testcase:
 
 
 
-
 def solution(str1, str2):
     answer = 0
     str1 = str1.lower()
@@ -83,11 +82,17 @@ def solution(str1, str2):
 
     if len(union_list) == 0:
         return 65536
+    intersection_len,union_len=0,0
+    for intersection in intersection_list:
+        a=str1_list.count(intersection)
+        b=str2_list.count(intersection)
+        intersection_len+=min(a,b)
 
-    intersection_len = sum([min(str1_list.count(intersection), str2_list.count(intersection)) for intersection in intersection_list])
-    
-    union_len = sum([max(str1_list.count(union), str2_list.count(union)) for union in union_list])
-   
+    for union in union_list:
+        a=str1_list.count(union)
+        b=str2_list.count(union)
+        union_len+=max(a,b)
+
     answer = int((intersection_len / union_len) * 65536)
 
     return answer
@@ -96,6 +101,9 @@ print(solution('FRANCE','french'))
 print(solution('handshake','shake hands'))
 print(solution('aa1+aa2','AAAA12'))
 print(solution('E=M*C^2','e=m*c^2'))
+
+
+
 
 
 import numpy as np
